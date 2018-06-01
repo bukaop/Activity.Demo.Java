@@ -1,0 +1,138 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"  />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <title>{$content['title']}</title>
+    <meta name="keywords" content="{if isset($terms[$content['id']][2])}<?=implode(' ', $terms[$content['id']][2])?>{/if}"/>
+    <meta name="description" content="{$content['description']}"/>
+    <link rel="stylesheet" href="{$resource}/assets/css/common.css"/>
+    <link rel="stylesheet" href="{$resource}/assets/templates/wap/default/css/touch.css"/>
+    <link rel="stylesheet" href="{$resource}/assets/templates/wap/default/css/myAudio.css">
+    <link rel="stylesheet" href="{$resource}/assets/templates/wap/default/css/mobile_article_picture.css"/>
+    <link rel="stylesheet" href="{$assets}css/article_hang.css"/>
+    <!--{if isset($color) && !empty($color)}-->
+    <link rel="stylesheet" href="{$resource}/assets/templates/wap/default/css/color/<?=$color?>.css"/>
+    <!--{/if}-->
+    <script type="text/javascript" src="{$resource}/assets/js/jquery.js"></script>
+    <script type="text/javascript" src="{$assets}js/article_hang.js"></script>
+    <script type="text/javascript" src="{$resource}/assets/templates/wap/default/js/touch.js"></script>
+    <script type="text/javascript" src="{$resource}/assets/templates/wap/default/js/myAudio.js"></script>
+    <script type="text/javascript" src="{$resource}/assets/templates/wap/default/js/mobile_article_picture.js"></script>
+    <script type="text/javascript" src="{$resource}/assets/templates/wap/default/js/publicfunction.js"></script>
+<body>
+
+<div class="g-container">
+    <img src="<?= empty($shareimage) ? '' : $shareimage?>" style="height:0px;width:0px;display:block;">
+    <header>
+        <!-- 导航菜单 -->
+        <!--{template 'shared/menu'}-->
+
+        <!-- 文章标题头部 -->
+        <div class="a-title">
+            <h1>{$content['title']}</h1>
+        </div>
+        <author class="a-author">
+            <!--{if $content['enablecopyright']}-->
+            <span class="copyright">&copy;原创&nbsp;&nbsp;</span>
+            <!--{/if}-->
+
+            <span class="date"><?=date('Y-m-d H:i',strtotime($content['published']))?>&nbsp;&nbsp;</span>
+
+            <!--{if empty($content['enablecopyright']) && isset($terms[$content['id']][4])}-->
+            <span class="source">
+                    <a href="<?= empty($content['sourceurl']) ? 'javascript:;' : $content['sourceurl']; ?>" target="_blank"><?= implode(' ', $terms[$content['id']][4]) ?>&nbsp;&nbsp;</a>
+                </span>
+            <!--{/if}-->
+
+            <!--{if isset($terms[$content['id']][1])}-->
+            <span class="author">
+                    <?=implode(', ', $terms[$content['id']][1])?>
+                </span>
+            <!--{/if}-->
+            <span>阅读 <?=$content['pv'];?></span>
+            <span>分享 <?=$content['shares'];?></span>
+        </author>
+    </header>
+
+    <!-- 文章正文bb -->
+    <article>
+        <div class="article">
+            <!--{if $content['gallery']['display_position'] == 1}-->
+            <!-- 图集 -->
+            <!--{template 'app/article/gallery'}-->
+            <!--{/if}-->
+
+            <!--{if $content['pagecount']>1}-->
+            <!--{$content['pages'][$page-1]}-->
+            <!--{else}-->
+            <!--{$content['content']}-->
+            <!--{/if}-->
+            <!--{if isset($terms[$content['id']][1])}-->
+            <!--<p style="text-align: right;"><span class="author">（作者：<?=implode(' ', $terms[$content['id']][1])?>)</span></p>-->
+            <!--{/if}-->
+
+            <!--{if $content['gallery']['display_position'] == 2}-->
+            <!-- 图集 -->
+            <!--{template 'app/article/gallery'}-->
+            <!--{/if}-->
+        </div>
+        <!--{if $content['pagecount']>1}-->
+        <!-- 分页 -->
+        <div class="article">
+            <div class="page">
+                <?=\Core\Core::pages($pagetotal, $page, 1, 2, "/p/".$content['id']);?>
+            </div>
+        </div>
+        <!--{/if}-->
+
+        <div class="article">
+            <!-- 文章投票挂件 -->
+            <!--{template 'app/article/hang'}-->
+        </div>
+    </article>
+
+    <!-- 文章附件 -->
+    <!--{template 'shared/attachment'}-->
+
+    <!-- 广告 -->
+    <!--{template 'shared/ad'}-->
+    <!-- 新广告 -->
+    <!--{template 'shared/poster'}-->
+
+    <!-- 点赞与分享 -->
+    <!--{template 'shared/sharebox'}-->
+
+    <!-- 文章相关阅读 -->
+    <!--{template 'shared/relateread'}-->
+
+    <!-- 评论 -->
+    <!--template 'shared/comment'-->
+    <!--{template 'shared/articlesyscomment'}-->
+    <footer class="g-cloumn">
+        <!-- 页脚 -->
+        <!--{template 'shared/footer'}-->
+    </footer>
+</div>
+
+
+<!--底部下载-->
+<!--{template 'shared/download/download'}-->
+
+
+</body>
+
+<!-- 微信分享js f'k -->
+<!--{template 'shared/wechatsharejs'}-->
+<script type="text/javascript" src="{$resource}/assets/templates/wap/default/js/islider.js"></script>
+<script>
+    $('article').find('img').each(function () {
+        $(this).css('height', 'auto');
+    });
+</script>
+</html>
